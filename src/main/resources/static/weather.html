@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myWeatherApp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script type="text/javascript" src="location.js"></script>
+
+
+<link rel="stylesheet" href="location.css">
+
+
+<title>Split Screen Example</title>
+<style>
+body, html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	overflow: hidden;
+}
+
+.split-container {
+	display: flex;
+	height: 100%;
+}
+
+.split-left, .split-right {
+	height: 100%;
+	flex: 1;
+}
+</style>
+</head>
+<body ng-app="myWeatherApp" ng-controller="myCtrl">
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<div>
+					<img style="margin-right: 10px; height: 40px; margin-top: 5px;"
+						alt="Weather" src="weather-icon.png">
+				</div>
+			</div>
+
+			<!-- Logout button added here -->
+			<ul class="nav navbar-nav">
+				<li style="margin-top: 8px;"><h5>
+						<strong>Weather App</strong>
+					</h5></li>
+			</ul>
+
+			<ul class="nav navbar-nav" style="float: right;">
+				<li style="margin-top: 8px;"><h5>
+						<strong>Timer: {{ time.minutes }}:{{ time.seconds }}</strong>
+					</h5></li>
+				<li><a ng-click="getChart()">Show Chart</a></li>
+				<li><a href="#" ng-click="logout()">Logout</a></li>
+				<!-- Added logout button -->
+			</ul>
+		</div>
+	</nav>
+	<div></div>
+
+
+	<div class="split-container">
+		<div class="split-left">
+			<div>
+				<!-- <button ng-click="getLocation()">Get Location</button> -->
+				<div class="weather-card">
+					<h2>{{data.name}}</h2>
+					<p class="temperature">{{ data.main.temp }} °C</p>
+					<p>Description: {{ data.weather[0].description }}</p>
+					<!-- <p>Humidity:{{data.main.humidity}}%</p>
+					<p>Wind Speed: {{data.wind.speed}} km/h</p> -->
+				</div>
+			</div>
+
+			<div class="weather-card" style="margin-top: 20px;">
+				<div class="form-group">
+
+					<label>Last updated Scheduled Time :{{scheduleMinutes}}
+						(mins)</label> <label>Schedule Time In Minutes:</label> <input
+						type="number" id="minutesInput" ng-model="newMinutes"
+						class="form-control" min="0" max="59" placeholder="Minutes">
+				</div>
+				<button ng-click="updateTime()" class="btn btn-primary">Update
+					Time</button>
+			</div>
+		</div>
+		<div class="split-right">
+			<div style="height: 250px; width: 550px">
+				<canvas id="weatherChart" width="400px" height="200px"></canvas>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
